@@ -6,7 +6,7 @@ require("./manager/manager");
 require("./pilot/pilot");
 
 eventsPool.on("new-flight", handleNewFlight);
-eventsPool.on("took_off", handleTookOffFlight);
+eventsPool.on("took-off", handleTookOffFlight);
 eventsPool.on("arrived", handleArrivedFlight);
 
 function handleNewFlight(payload) {
