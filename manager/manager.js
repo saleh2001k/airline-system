@@ -7,7 +7,7 @@ const eventsPool = require("../events");
 eventsPool.on("new-flight", flightEventHandler);
 
 function flightEventHandler(payload) {
-  console.log(`Manager: new flight with ID ${payload.details.flightID} has been scheduled`);
+  console.log(`Manager: new flight with ID ${payload.Details.flightID} has been scheduled`);
 }
 
 setInterval(() => {
@@ -29,7 +29,7 @@ setInterval(() => {
 
 setTimeout(() => {
   eventsPool.on("arrived", (payload) => {
-    const pilotName = payload.details.pilot;
+    const pilotName = payload.Details.pilot;
     console.log(`Manager: we're greatly thankful for the amazing flight ${pilotName}`);
   });
 }, 1000);

@@ -4,7 +4,7 @@
 ### UML :
 ![UML](UML.png)
 
-#### [PR](https://github.com/saleh2001k/airline-system/pull/1)
+#### [PR](https://github.com/saleh2001k/airline-system/pull/2)
 ### Output:
 
 ```bash
