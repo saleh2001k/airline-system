@@ -2,34 +2,38 @@
 
 const uuid = require("uuid");
 const { faker } = require("@faker-js/faker");
-const eventsPool = require("../events");
+require('dotenv').config();
+const port = process.env.PORT || 3000;
+const host = `http://localhost:${port}`;
+const io = require('socket.io-client');
+const socket = io.connect(host);
 
-eventsPool.on("new-flight", flightEventHandler);
+socket.on('new-flight', handleNewFlight);
+socket.on('flight-arrived', greetFlight);
 
-function flightEventHandler(payload) {
-  console.log(`Manager: new flight with ID ${payload.Details.flightID} has been scheduled`);
+function handleNewFlight(payload) {
+  setInterval(() => {
+    const flightID = uuid.v4();
+    const pilotName = faker.person.fullName();
+    const destination = `${faker.location.city()}, ${faker.location.country()}`;
+    const flight = {
+      event: "new-flight",
+      time: new Date().toLocaleString(),
+      Details: {
+        airLine: "Royal Jordanian Airlines",
+        flightID: flightID,
+        pilot: pilotName,
+        destination: destination,
+      },
+    };
+    console.log(`Manager: New flight with ID ${flight.Details.flightID} has been scheduled`);
+    socket.emit("new-flight-added", flight);
+  }, 10000);
 }
 
-setInterval(() => {
-  const flightID = uuid.v4();
-  const pilotName = faker.person.fullName();
-  const destination = `${faker.location.city()}, ${faker.location.country()}`;
-
-  eventsPool.emit("new-flight", {
-    event: "new-flight",
-    time: new Date().toLocaleString(),
-    Details: {
-      airLine: "Royal Jordanian Airlines",
-      flightID: flightID,
-      pilot: pilotName,
-      destination: destination,
-    },
-  });
-}, 10000);
-
-setTimeout(() => {
-  eventsPool.on("arrived", (payload) => {
+function greetFlight(payload) {
+  setTimeout(() => {
     const pilotName = payload.Details.pilot;
-    console.log(`Manager: we're greatly thankful for the amazing flight ${pilotName}`);
-  });
-}, 1000);
+    console.log(`Manager: We're greatly thankful for the amazing flight ${pilotName}`);
+  }, 1000);
+}

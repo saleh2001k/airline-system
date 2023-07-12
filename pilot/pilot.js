@@ -1,26 +1,35 @@
 "use strict";
 
-const eventsPool = require("../events");
-require("../manager/manager");
+require("dotenv").config();
+const port = process.env.PORT || 3000;
+const host = `http://localhost:${port}`;
+const hostAirline = `http://localhost:${port}/airline`;
 
-eventsPool.on("new-flight", flightEventHandler);
+const io = require("socket.io-client");
+const socket = io.connect(host);
+const socketTakeOff = io.connect(hostAirline);
 
-function flightEventHandler(payload) {
+socket.on("new-flight-added", flightEventTakeOff);
+socket.on("new-flight-added", flightEventArrived);
+
+function flightEventTakeOff(payload) {
   setTimeout(() => {
     const flightID = payload.Details.flightID;
-    console.log(`Pilot: flight with ID ${flightID} took off`);
-    
+    console.log(`Pilot: Flight with ID ${flightID} took off`);
+
     payload.event = "took-off";
-    payload.time = new Date().toLocaleString()
-    eventsPool.emit("took-off", payload);
+    payload.time = new Date().toLocaleString();
+    socketTakeOff.emit("took-off", payload);
   }, 4000);
+}
 
+function flightEventArrived(payload) {
   setTimeout(() => {
     const flightID = payload.Details.flightID;
-    console.log(`Pilot: flight with ID ${flightID} has arrived`);
+    console.log(`Pilot: Flight with ID ${flightID} has arrived`);
 
     payload.event = "arrived";
     payload.time = new Date().toLocaleString();
-    eventsPool.emit("arrived", payload);
+    socket.emit("arrived", payload);
   }, 7000);
 }
