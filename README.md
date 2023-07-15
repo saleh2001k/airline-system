@@ -47,7 +47,7 @@ Manager: we're greatly thankful for the amazing flight, lalo salmnca
 
 ```
 
-
+----------
 ## Airline System (Socket.io)
 
 #### [PR (Socket.io)](https://github.com/saleh2001k/airline-system/pull/4)
@@ -123,3 +123,70 @@ Pilot: Flight with ID e74781ac-a2a8-4457-9217-0a54ea111001 has arrived
 
 
 ![Alt text](image.png)
+
+----------
+## Airline System (Socket.io) 2
+
+#### [PR (Socket.io) 2](https://github.com/saleh2001k/airline-system/pull/4)
+
+To test this lab you need to start the system.js and the manager.js for as much as you want, then when you start the pilot.js, you will see all the missed flights in the pilot log:
+
+
+##### before running the pilot:
+#### system.js:
+
+```bash
+Your connected to the Server, your ID: qntW6TZwU8sZ8gFXAAAB
+New Flight: {
+  event: 'new-flight',
+  time: '7/15/2023, 5:40:08 PM',
+  Details: {
+    airLine: 'Royal Jordanian Airlines',
+    flightID: '65f85c5b-3a00-4351-9481-d833b657cc05',
+    pilot: 'Hubert Johnston DVM',
+    destination: 'East Elnoraside, Reunion'
+  }
+}
+New Flight: {
+  event: 'new-flight',
+  time: '7/15/2023, 5:40:18 PM',
+  Details: {
+    airLine: 'Royal Jordanian Airlines',
+    flightID: 'febf37d3-27dd-416c-acc9-e1527ddf39d7',
+    pilot: 'Meghan Fritsch',
+    destination: 'Cormierstad, France'
+  }
+}
+New Flight: {
+  event: 'new-flight',
+  time: '7/15/2023, 5:40:28 PM',
+  Details: {
+    airLine: 'Royal Jordanian Airlines',
+    flightID: '308d7d46-9675-4f53-a95c-4a298481c931',
+    pilot: 'Marie Doyle',
+    destination: 'Carson, Monaco'
+  }
+}
+
+```
+#### manager.js:
+```bash
+Manager: New flight with ID 65f85c5b-3a00-4351-9481-d833b657cc05 has been scheduled
+Manager: New flight with ID febf37d3-27dd-416c-acc9-e1527ddf39d7 has been scheduled
+Manager: New flight with ID 308d7d46-9675-4f53-a95c-4a298481c931 has been scheduled
+
+```
+
+##### and when werun the pilot, you will get the missed filght  
+#### pilot.js
+
+```
+Pilot: Sorry, I didn't catch this flight ID 65f85c5b-3a00-4351-9481-d833b657cc05
+Pilot: Sorry, I didn't catch this flight ID febf37d3-27dd-416c-acc9-e1527ddf39d7
+Pilot: Sorry, I didn't catch this flight ID 308d7d46-9675-4f53-a95c-4a298481c931
+```
+
+Before:
+![Alt text](image-2.PNG)
+After:
+![Alt text](image-1.png)
