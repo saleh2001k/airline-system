@@ -12,7 +12,7 @@ const socketTakeOff = io.connect(hostAirline);
 socket.emit("get-all-flights");
 socket.on("flight", handleFlightEvent);
 socket.on("new-flight-added", flightEventTakeOff);
-socket.on("flight-arrived", flightEventArrived);
+socket.on("new-flight-added", flightEventArrived);
 
 function flightEventTakeOff(payload) {
   setTimeout(() => {
