@@ -40,7 +40,7 @@ function handleNewFlight(payload) {
       destination: payload.destination,
     },
   };
-  io.emit("new-flight-added", payload);
+  io.emit("new-flight-added", Object.assign(payload, { id: id }));
   console.log("New Flight:", payload);
 }
 
